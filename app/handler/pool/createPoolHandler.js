@@ -5,6 +5,8 @@ import TokenData from "app/database/tokens";
 import Config from "app/config";
 import Sodium from "app/utils/sodium";
 import AccountData from "app/database/account";
+import prepare from "app/utils/prepare";
+import withRegisteredAccount from "app/middleware/withRegisteredAccount";
 
 async function CreatePoolHandler(req, res) {
   const validationErrors = createPoolRequest(req.body)
@@ -65,4 +67,6 @@ async function CreatePoolHandler(req, res) {
   Response.json(res, "ok")
 }
 
-export default CreatePoolHandler
+export default prepare(
+  withRegisteredAccount
+)(CreatePoolHandler)
