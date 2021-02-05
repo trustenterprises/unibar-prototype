@@ -1,11 +1,23 @@
 import React, { useState } from "react";
+import MetamaskButton from "components/MetamaskButton"
+import CreateAccountButton from "components/CreateAccountButton"
+import GetAccountButton from "components/GetAccountButton"
+import CreateTokenButton from "components/CreateTokenButton";
+import Recoil from "app/recoil"
+import { useRecoilValue } from 'recoil';
 
 function Index() {
+
+  const accountAuth = useRecoilValue(Recoil.selectors.selectAuthorisedAccount);
+
   const [show, setShow] = useState(false);
   const [product, setProduct] = useState(false);
   const [deliverables, setDeliverables] = useState(false);
   const [profile, setProfile] = useState(false);
 
+  /*
+  It'll be nice to clear this up...
+  */
   return (
     <div>
       {/* Mobile */}
@@ -280,7 +292,9 @@ function Index() {
               <h2 className="text-3xl font-bold leading-tight text-white">Overview</h2>
             </div>
             <div className="mt-6 lg:mt-0">
-              <button className="focus:outline-none transition duration-150 ease-in-out hover:bg-gray-200 border bg-white rounded text-gray-900 px-8 py-2 text-sm" onClick={() => setProfile(!profile)}>Connect to Metamask</button>
+              { /*  Probably will just change the text or something */}
+              {/*{ !accountAuth.account &&  }*/}
+              <MetamaskButton />
             </div>
           </div>
         </div>
@@ -320,13 +334,22 @@ function Index() {
                 </div>
                 {/* Remove class [ h-64 ] when adding a card block */}
                 <div className="container mx-auto h-64">
-                  <div className="bg-white w-full h-full rounded shadow">{/* Place your content here */}</div>
+                  <div className="bg-white w-full h-full rounded shadow">
+                    {accountAuth.account && <>
+                      <button
+                        className="mx-2 my-2 bg-white transition duration-150 ease-in-out hover:border-indigo-600 hover:text-indigo-600 rounded border border-indigo-700 text-indigo-700 px-6 py-2 text-sm">Check Authorise {accountAuth.account}</button>
+                      <CreateAccountButton />
+                      <GetAccountButton />
+                      <CreateTokenButton />
+
+                      <button className="mx-2 my-2 bg-white transition duration-150 ease-in-out hover:border-indigo-600 hover:text-indigo-600 rounded border border-indigo-700 text-indigo-700 px-6 py-2 text-sm">Create/Submit to pool</button>
+                      </>
+                    }
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
-
       </div>
     </div>
   );

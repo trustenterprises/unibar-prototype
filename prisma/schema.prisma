@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//datasource db {
+//  provider = "postgresql"
+//  url      = env("DATABASE_URL")
+//}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = [ "nativeTypes" ]
+}
+
+// Ignore until using postgres
+//enum Role {
+//  USER
+//  TREASURY
+//  CUSTODIAN
+//  EXCHANGE
+//  POOL
+//}
+
+model User {
+    id                  Int     @id     @default(autoincrement())
+    eth_address         String  @unique
+    signature_password  String
+    accounts            Account[]
+}
+
+model Account {
+    id                  Int     @id      @default(autoincrement())
+    userId              Int?
+    User                User?   @relation( fields: [userId], references: [id])
+    hedera_id           String  @unique
+    public_key          String
+    enc_skey            String
+//    role                Role     @default(USER) // postgres required
+    mintedTokens        Token[]
+    holdings            Holding[]
+}
+
+model Token {
+    id                  Int     @id     @default(autoincrement())
+    initial_price       Decimal
+    asset_contract      String? // The asset contract from ethereum
+    is_synthetic        Boolean @default(false) // Imported via bridge or seeded
+    symbol              String
+    supply              String
+    decimals            Int
+    supplyWithDecimals  String
+    token_id            String  @unique
+    spec_ref            String
+    has_kyc             Boolean @default(false)
+    has_freeze          Boolean @default(false)
+    creatorId           Int
+    account             Account @relation( fields: [creatorId], references: [id])
+}
+
+model Holding {
+    id                  Int     @id     @default(autoincrement())
+    tokenId             Int
+    token               Token   @relation( fields: [tokenId], references: [id])
+    amount              Decimal
+}
+
+// Tokens are deposited into a pool
+model Pool {
+    id                  Int     @id     @default(autoincrement())
+    name                String
+    tokenId             Int
+    token               Token   @relation( fields: [tokenId], references: [id])
+    amount              Decimal // Total tokens for sale
+    rewardLiquidityPool RewardLiquidityPool[]
+    accountId           Int
+    account             Account @relation( fields: [accountId], references: [id])
+}
+
+// LP tokens are sent from this account, to the depositee.
+model RewardLiquidityPool {
+    id                  Int     @id     @default(autoincrement())
+    depositAccountId    Int     // This is where funds are sent from the user that "stakes" tokens
+    Account             Account @relation( fields: [depositAccountId], references: [id])
+    poolId              Int
+    Pool                Pool    @relation( fields: [poolId], references: [id])
+    amount              Decimal  // This is the deposited amount ab
+    rewardLiquidityPreference RewardLiquidityPreference[]
+    escrowTreasuryId    Int
+    escrowTreasuryAccount EscrowTreasury @relation( fields: [escrowTreasuryId], references: [id])
+}
+
+// RewardLiquidityPool hasOne EscrowRewardAccount links to keys for
+model EscrowTreasury {
+    id                  Int     @id     @default(autoincrement())
+    accountId           Int
+    account             Account @relation( fields: [accountId], references: [id])
+}
+
+// For a given liquidity pool, which tokens can be sent to it
+model RewardLiquidityPreference {
+    id                  Int     @id      @default(autoincrement())
+    liquidityPoolId     Int
+    rewardLiquidityPool RewardLiquidityPool  @relation( fields: [liquidityPoolId], references: [id])
+    poolId              Int
+    Pool                Pool    @relation( fields: [poolId], references: [id])
+    tokenId             Int     // This is a token that the parent pool accepts
+    Token               Token   @relation( fields: [tokenId], references: [id])
+    amount              Decimal  // This is the deposited amount ab
+}
+
+
