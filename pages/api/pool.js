@@ -28,6 +28,5 @@ function PoolResource(req, res) {
 export default prepare(
 	denyPut,
 	denyDelete,
-	// withRegisteredAccount,
 	useHashgraphContext
 )(PoolResource)
