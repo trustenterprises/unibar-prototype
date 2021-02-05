@@ -35,7 +35,7 @@ function addHolding(holding: Holding) {
   })
 }
 
-function find (token_id: String) {
+function find(token_id: String) {
   return prisma.token.findFirst({
     where: {
       token_id
