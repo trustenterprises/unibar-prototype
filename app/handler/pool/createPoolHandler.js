@@ -22,13 +22,13 @@ async function CreatePoolHandler(req, res) {
   const token = await TokenData.find(token_id)
 
   if (!token) {
-    return Response.badRequest(res, { error: `Token with token_id: ${token_id} does not exist` } )
+    return Response.unprocessibleEntity(res, { error: `Token with token_id: ${token_id} does not exist` } )
   }
 
   const poolExists = await PoolData.find(token_id)
 
   if (poolExists) {
-    return Response.badRequest(res, { error:  `Pool with token_id: ${token_id} already exists` })
+    return Response.unprocessibleEntity(res, { error:  `Pool with token_id: ${token_id} already exists` })
   }
 
   const { hashgraphClient } = req.context
