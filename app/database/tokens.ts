@@ -45,6 +45,15 @@ function find(token_id: String) {
     }
   })
 }
+
+function getUserTokenHolding(holdingQry: Holding) {
+  return prisma.holding.findFirst({
+    where: {
+      tokenId: holdingQry.tokenId,
+      accountId: holdingQry.accountId
+    },
+    include: {
+      token: true
     }
   })
 }
@@ -52,7 +61,8 @@ function find(token_id: String) {
 export default {
   storeToken,
   addHolding,
-  find
+  find,
+  getUserTokenHolding
 }
 
 
