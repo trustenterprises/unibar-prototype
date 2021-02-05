@@ -41,7 +41,12 @@ function find(token_id: String) {
       token_id
     },
     include: {
-      Pool: true
+      Pool: {
+        select: {
+          tokenId: true,
+          account: true
+        }
+      }
     }
   })
 }
