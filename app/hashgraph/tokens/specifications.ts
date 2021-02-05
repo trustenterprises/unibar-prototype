@@ -76,9 +76,22 @@ const CompliantNonFungible: Specification = {
   freeze: true
 }
 
+/**
+ * A special token that acts as a receipt for deposited assets in a pool. These
+ * can be returned to the treasury account that minted them. Upon receipt a claimant
+ * will be returned all tokens deposited and their fair share of the reward distribution.
+ *
+ * @type {{decimals: number}}
+ */
+const UnibarLiquidityProviderReceipt: Specification = {
+  ...NonFungible,
+  reference: 'lp.reward.receipt',
+}
+
 export default {
   Fungible,
   NonFungible,
   CompliantFungible,
-  CompliantNonFungible
+  CompliantNonFungible,
+  UnibarLiquidityProviderReceipt
 }
