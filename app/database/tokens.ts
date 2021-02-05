@@ -39,6 +39,12 @@ function find(token_id: String) {
   return prisma.token.findFirst({
     where: {
       token_id
+    },
+    include: {
+      Pool: true
+    }
+  })
+}
     }
   })
 }
