@@ -15,7 +15,6 @@ function createPool(pool: Pool) {
 }
 
 function find(tokenId: string) {
-  console.log(tokenId);
   return prisma.pool.findFirst({
     where: {
       token: {
