@@ -1,23 +1,17 @@
 import {
   PrivateKey,
   AccountBalanceQuery,
-  TopicInfoQuery,
-  TopicCreateTransaction,
-  TopicUpdateTransaction,
-  TopicMessageSubmitTransaction,
-  TransactionRecordQuery,
   Hbar,
   TokenCreateTransaction,
-  TokenInfoQuery, AccountInfoQuery, AccountId, TokenId, TokenAssociateTransaction
+  TokenInfoQuery,
+  TokenAssociateTransaction,
+  TransferTransaction
 } from "@hashgraph/sdk"
-import HashgraphClientContract from "../contract"
-import HashgraphNodeNetwork from "../network"
 import Config from "app/config"
-import sleep from "app/utils/sleep"
-import Explorer from "app/utils/explorer"
-
 import { Specification } from "app/hashgraph/tokens/specifications"
 import TokenBalanceMap from "@hashgraph/sdk/lib/account/TokenBalanceMap";
+import TokenData from "app/database/tokens";
+import { ResponseCodeEnum } from "@hashgraph/proto";
 
 export type TokenCreation = {
   specification: Specification;
@@ -42,6 +36,10 @@ export type AccountTokensResult = {
   tokens: TokenBalanceMap;
 }
 
+async function createLiquidityProviderToken () {
+  // A token supply is mutable, used for a LP
+}
+
 // Question: Is this method good enough for pool functionality
 async function createToken(client, tokenCreation: TokenCreation): Promise<CreatedTokenReceipt> {
 
@@ -56,7 +54,6 @@ async function createToken(client, tokenCreation: TokenCreation): Promise<Create
 
   const operatorPrivateKey = PrivateKey.fromString(Config.privateKey)
   const supplyPrivateKey = PrivateKey.fromString(privateKey)
-
   const supplyWithDecimals = supply * 10 ** specification.decimals
 
   const transaction = new TokenCreateTransaction()
@@ -119,16 +116,48 @@ async function associateToAccount(client, association: AssociateToken) {
 }
 
 export type TransferTokenOrder = {
-  sender: string;
-  receiver: string;
-  tokenId: string;
+  authorisedAccount: object;
+  token: object;
+  receiver: object;
   amount: number;
-  // privateKey: string;
 }
 
 // Transfer token to account
-async function transferToken(client, transfer: TransferTokenOrder) {
+async function transferToken(client, {
+  authorisedAccount,
+  receiver,
+  token,
+  amount
+}: TransferTokenOrder) {
 
+  const transaction = await new TransferTransaction()
+    .addTokenTransfer(token.token_id, authorisedAccount.hedera_id, -amount)
+    .addTokenTransfer(token.token_id, receiver.hedera_id, amount)
+    .freezeWith(client);
+
+  const accountPrivateKey = PrivateKey.fromString(authorisedAccount.private_key)
+  const signTx = await transaction.sign(accountPrivateKey);
+  const txResponse = await signTx.execute(client);
+  const receipt = await txResponse.getReceipt(client);
+  const hasTransferredToken = receipt.status._code === ResponseCodeEnum.SUCCESS
+
+  if (!hasTransferredToken) {
+    throw new Error("The transfer of tokens did not succeed")
+  }
+
+  // Update holding for sender
+  await TokenData.adjustHolding({
+    amount: -amount,
+    tokenId: token.id,
+    accountId: authorisedAccount.id
+  })
+
+  // Update holding for recipient
+  await TokenData.adjustHolding({
+    amount: amount,
+    tokenId: token.id,
+    accountId: receiver.id
+  })
 }
 
 // Ignore more now, we need to know the name of a token if it is imported.
@@ -143,5 +172,6 @@ export default {
   createToken,
   accountTokensQuery,
   singleTokenQuery,
-  associateToAccount
+  associateToAccount,
+  transferToken
 }
