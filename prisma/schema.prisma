@@ -84,6 +84,7 @@ model Pool {
 model RewardLiquidityPool {
     id                  Int     @id     @default(autoincrement())
     depositAccountId    Int     // This is where funds are sent from the user that "stakes" tokens
+    price               Decimal? // Allows a user to set a price of an HTS non-synthetic asset, like a d/NFT collectable.
     Account             Account @relation( fields: [depositAccountId], references: [id])
     poolId              Int
     Pool                Pool    @relation( fields: [poolId], references: [id])
