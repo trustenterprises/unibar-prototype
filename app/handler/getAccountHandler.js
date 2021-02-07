@@ -3,7 +3,7 @@ import Response from "app/response"
 import UserData from "app/database/user";
 
 async function GetAccountHandler(req, res) {
-	const validationErrors = ensureAccountRequest(req.body)
+	const validationErrors = ensureAccountRequest(req.query)
 
 	if (validationErrors) {
 		return Response.unprocessibleEntity(res, validationErrors)
