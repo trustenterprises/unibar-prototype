@@ -8,9 +8,68 @@ type Pool = {
   amount: number; // Initially zer0
 }
 
+type UpdatePoolAmount = {
+  pool: object;
+  amount: number;
+}
+
 function createPool(pool: Pool) {
   return prisma.pool.create({
     data: pool
+  })
+}
+
+async function depositToPool(poolUpdate: UpdatePoolAmount) {
+  return prisma.pool.update({
+    where: { id: poolUpdate.pool.id },
+    data: {
+      amount: parseFloat(poolUpdate.pool.amount) + parseFloat(poolUpdate.amount)
+    }
+  })
+}
+
+type RewardLPPoolCreation = {
+  escrowAccount: object;
+  depositeeAccount: object;
+  pool: object;
+  price: number;
+  amount: number;
+}
+
+async function createRewardLiquidityPool({
+  escrowAccount,
+  depositeeAccount,
+  pool,
+  price,
+  amount
+}: RewardLPPoolCreation) {
+
+  const escrow = await prisma.escrowTreasury.create({
+    data: { accountId: escrowAccount.id }
+  })
+
+  const rlpPool = await prisma.rewardLiquidityPool.create({
+    data: {
+      depositAccountId: depositeeAccount.id,
+      poolId: pool.id,
+      escrowTreasuryId: escrow.id,
+      price,
+      amount,
+    }
+  })
+
+  return rlpPool
+}
+
+function getRewardLiquidityPool({
+  account,
+  pool
+}) {
+  return prisma.rewardLiquidityPool.findFirst({
+    where: {
+      depositAccountId: account.id,
+      poolId: pool.id
+    }
   })
 }
 
@@ -34,15 +93,12 @@ function find(tokenId: string) {
   })
 }
 
-// When tokens are added to a pool, depositi
-function depositToPool(pool: Pool) {
-
-}
-
 export default {
   find,
   createPool,
-  // addToPool
+  depositToPool,
+  createRewardLiquidityPool,
+  getRewardLiquidityPool
 }
 
 
