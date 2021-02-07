@@ -129,7 +129,7 @@ async function HandleDemoStarburst(req, res) {
 
 	const batchTransfer = async (accounts) => {
 		const transaction = await new TransferTransaction()
-			.addTokenTransfer(tokenId, hedera_id, -(MAX_SEND / 2.5))
+			.addTokenTransfer(tokenId, hedera_id, -(MAX_SEND / 5))
 
 		accounts.forEach(account => {
 			transaction.addTokenTransfer(tokenId, account, MAX_SEND / 40)
