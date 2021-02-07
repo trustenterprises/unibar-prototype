@@ -11,7 +11,8 @@
     "test:watch": "jest --testPathIgnorePatterns='e2e/*' --watchAll",
     "test:all": "jest --coverage --runInBand --detectOpenHandles",
     "prisma:migrate": "prisma migrate dev --preview-feature",
-    "prisma:build": "jest --coverage --runInBand --detectOpenHandles"
+    "prisma:build": "jest --coverage --runInBand --detectOpenHandles",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.0.2",
