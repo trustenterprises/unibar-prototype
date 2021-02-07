@@ -35,6 +35,30 @@ function addHolding(holding: Holding) {
   })
 }
 
+async function adjustHolding(holding: Holding) {
+
+  const { accountId, tokenId, amount } = holding
+
+  const current = await prisma.holding.findFirst({
+    where: {
+      accountId,
+      tokenId
+    }
+  })
+
+  if (!current) {
+    return addHolding(holding)
+  }
+
+  return prisma.holding.update({
+    where: { id: current.id },
+    data: {
+      ...current,
+      amount: parseFloat(current.amount) + parseFloat(holding.amount)
+    }
+  })
+}
+
 function find(token_id: String) {
   return prisma.token.findFirst({
     where: {
@@ -44,7 +68,9 @@ function find(token_id: String) {
       Pool: {
         select: {
           tokenId: true,
-          account: true
+          account: true,
+          amount: true,
+          id: true
         }
       }
     }
@@ -67,7 +93,8 @@ export default {
   storeToken,
   addHolding,
   find,
-  getUserTokenHolding
+  getUserTokenHolding,
+  adjustHolding
 }
 
 
