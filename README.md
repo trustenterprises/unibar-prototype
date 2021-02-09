@@ -6,7 +6,7 @@ If you need a gasless interface, inbuilt private key management and basic ethere
 
 https://documenter.getpostman.com/view/416758/TW74ijpG
 
-If you use any of the code, please provide attribution to all elements consume and within your hedera21 submission please.
+**If you use any of the code, please provide attribution to all elements consume and within your hedera21 submission please.**
 
 ---
 
