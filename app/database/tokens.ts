@@ -23,19 +23,19 @@ type Holding = {
   accountId: number;
 }
 
-function storeToken(token: TokenStore) {
+function storeToken(token) {
   return prisma.token.create({
     data: token
   })
 }
 
-function addHolding(holding: Holding) {
+function addHolding(holding) {
   return prisma.holding.create({
     data: holding
   })
 }
 
-async function adjustHolding(holding: Holding) {
+async function adjustHolding(holding) {
 
   const { accountId, tokenId, amount } = holding
 
@@ -54,12 +54,13 @@ async function adjustHolding(holding: Holding) {
     where: { id: current.id },
     data: {
       ...current,
+      // @ts-ignore
       amount: parseFloat(current.amount) + parseFloat(holding.amount)
     }
   })
 }
 
-function find(token_id: String) {
+function find(token_id) {
   return prisma.token.findFirst({
     where: {
       token_id
@@ -77,7 +78,7 @@ function find(token_id: String) {
   })
 }
 
-function getUserTokenHolding(holdingQry: Holding) {
+function getUserTokenHolding(holdingQry) {
   return prisma.holding.findFirst({
     where: {
       tokenId: holdingQry.tokenId,

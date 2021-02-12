@@ -2,24 +2,24 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-type Pool = {
-  name: string; // Name of the symbol
-  tokenId: number;
-  amount: number; // Initially zer0
-}
+// type Pool = {
+//   name: string; // Name of the symbol
+//   tokenId: number;
+//   amount: number; // Initially zer0
+// }
 
 type UpdatePoolAmount = {
   pool: object;
   amount: number;
 }
 
-function createPool(pool: Pool) {
+function createPool(pool) {
   return prisma.pool.create({
     data: pool
   })
 }
 
-async function depositToPool(poolUpdate: UpdatePoolAmount) {
+async function depositToPool(poolUpdate) {
   return prisma.pool.update({
     where: { id: poolUpdate.pool.id },
     data: {
@@ -42,7 +42,7 @@ async function createRewardLiquidityPool({
   pool,
   price,
   amount
-}: RewardLPPoolCreation) {
+}) {
 
   const escrow = await prisma.escrowTreasury.create({
     data: { accountId: escrowAccount.id }
