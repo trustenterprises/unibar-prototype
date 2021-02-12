@@ -61,6 +61,23 @@ async function createRewardLiquidityPool({
   return rlpPool
 }
 
+function updatePoolAmount({
+  pool,
+  amount
+}) {
+  const updatedAmount =  parseFloat(pool.amount) - parseFloat(amount)
+
+  return prisma.pool.update({
+    where: {
+      id: pool.id,
+    },
+    data: {
+      amount: updatedAmount
+    }
+  })
+}
+
+
 function getRewardLiquidityPool({
   account,
   pool
@@ -77,16 +94,74 @@ function find(tokenId: string) {
   return prisma.pool.findFirst({
     where: {
       token: {
-        token_id: tokenId
+        token_id: tokenId,
       }
     },
     include: {
-      rewardLiquidityPool: true,
+      rewardLiquidityPool: {
+        select: {
+          amount: true,
+          escrowTreasuryAccount: {
+            select: {
+              accountId: true,
+              account: true
+            }
+          }
+        }
+      },
       token: {
         select: {
+          id: true,
           creatorId: false,
           token_id: true,
           symbol: true,
+          initial_price: true
+        }
+      },
+      account: true
+    }
+  })
+}
+
+
+function all() {
+  return prisma.pool.findMany({
+    include: {
+      token: true
+    }
+  })
+}
+
+function proxyRewardPool(id) {
+  return prisma.account.findFirst({
+    where: {
+      id
+    },
+    include: {
+      holdings: {
+        include: {
+          token: true
+        }
+      },
+      EscrowTreasury: {
+        include: {
+          RewardLiquidityPool: {
+            include: {
+              Pool: {
+                include: {
+                  account: {
+                    include: {
+                      holdings: {
+                        include: {
+                          token: true
+                        }
+                      }
+                    }
+                  },
+                }
+              },
+            }
+          }
         }
       }
     }
@@ -98,7 +173,10 @@ export default {
   createPool,
   depositToPool,
   createRewardLiquidityPool,
-  getRewardLiquidityPool
+  getRewardLiquidityPool,
+  updatePoolAmount,
+  proxyRewardPool,
+  all
 }
 
 

@@ -8,11 +8,12 @@ import axios from "axios";
 /**
 
  */
-export async function createToken() {
-  try {
-    const response = await axios.post('api/token')
+export async function createToken(payload) {
 
-    // Recoil saving?
+  try {
+    const response = await axios.post('api/token', payload)
+
+    return response.data
 
   } catch (exception) {
 

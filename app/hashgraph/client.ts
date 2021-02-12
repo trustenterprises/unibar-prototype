@@ -6,7 +6,13 @@ import {
   TokenInfoQuery
 } from "@hashgraph/sdk"
 import HashgraphNodeNetwork from "./network"
-import TokenService, { AssociateToken, TokenCreation, TransferTokenOrder } from "app/hashgraph/tokens";
+import TokenService, {
+  AssociateToken,
+  AtomicSwapTransaction,
+  StarburstTransaction,
+  TokenCreation,
+  TransferTokenOrder
+} from "app/hashgraph/tokens";
 import Config from "app/config";
 
 class HashgraphClient {
@@ -61,6 +67,14 @@ class HashgraphClient {
 
   async transferToken(transferToken: TransferTokenOrder) {
    return await TokenService.transferToken(this.client, transferToken)
+  }
+
+  async atomicSwap(atomicSwapTransaction: AtomicSwapTransaction) {
+   return await TokenService.atomicSwap(this.client, atomicSwapTransaction)
+  }
+
+  async starburstTransfer(starburstTransaction: StarburstTransaction) {
+   return await TokenService.starburstTransfer(this.client, starburstTransaction)
   }
 }
 

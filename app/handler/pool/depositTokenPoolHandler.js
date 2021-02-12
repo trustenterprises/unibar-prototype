@@ -39,7 +39,7 @@ async function DepositTokenPoolHandler(req, res) {
   })
 
   const currentRplPool = await service.checkForRewardLiquidityPoolExists()
-  
+
   if (currentRplPool) {
     return Response.unprocessibleEntity(res, {error: `Reward Liquidity Pool for user: ${authorisationAccount.hedera_id} for token ${token_id} already exists`})
   }
@@ -79,7 +79,12 @@ async function DepositTokenPoolHandler(req, res) {
   })
 
   // Update this
-  Response.json(res, "ok")
+  Response.json(res, {
+    state: 'deposit.token.success',
+    amount,
+    stored,
+    proxyLiquidityPoolId: proxyLiquidityPool.accountId
+  })
 }
 
 export default prepare(

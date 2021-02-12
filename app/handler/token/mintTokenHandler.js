@@ -15,8 +15,8 @@ async function MintTokenHandler(req, res) {
 		name,
 		price,
 		supply,
-		// requires_kyc,
-		// can_freeze,
+		requires_kyc = false,
+		can_freeze = false,
 		// linked_token_id // I want to link the price to be pegged to .01 ETH
 	} = req.body
 
@@ -37,8 +37,8 @@ async function MintTokenHandler(req, res) {
 	const stored = await TokenData.storeToken({
 		creatorId: id,
 		decimals: Specification.Fungible.decimals,
-		has_freeze: false,
-		has_kyc: false,
+		has_freeze: can_freeze,
+		has_kyc: requires_kyc,
 		initial_price: price,
 		is_synthetic: false,
 		spec_ref: Specification.Fungible.reference,

@@ -30,8 +30,13 @@ async function hasUserAuth({
     include: {
       accounts: {
         include:  {
-          // mintedTokens: true, // Not needed
-          holdings: true
+          mintedTokens: true, // Not needed
+          holdings: {
+            select: {
+              amount: true,
+              token: true
+            },
+          }
         }
       }
     }

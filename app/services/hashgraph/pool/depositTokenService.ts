@@ -3,7 +3,7 @@ import TokenData from "app/database/tokens";
 import AccountData from "app/database/account";
 import Sodium from "app/utils/sodium";
 import Config from "app/config";
-import Specification from "../../../hashgraph/tokens/specifications";
+import Specification from "app/hashgraph/tokens/specifications";
 
 class DepositTokenService {
 
@@ -86,14 +86,15 @@ class DepositTokenService {
     amount,
     proposedAmount
   }) {
+
     const lpToken = await this.hashgraphClient.createToken({
       accountId: proxyLiquidityPool.accountId,
       specification: Specification.Fungible,
       privateKey: proxyLiquidityPool.privateKey,
-      name: 'LP',
-      symbol: 'LP',
+      name: `${this.token.symbol} LP RECEIPT`,
+      symbol: `${this.token.symbol}:LP:RECEIPT`,
       price: 0,
-      supply: proposedAmount
+      supply: amount
     })
 
     const stored = await TokenData.storeToken({
@@ -106,7 +107,7 @@ class DepositTokenService {
       spec_ref: Specification.UnibarLiquidityProviderReceipt.reference,
       supply: amount,
       supplyWithDecimals: String(proposedAmount),
-      symbol: 'LP',
+      symbol: `${this.token.symbol}:LP:RECEIPT`,
       token_id: lpToken.tokenId,
       asset_contract: undefined
     })
