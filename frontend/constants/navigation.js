@@ -3,7 +3,7 @@ const sections = {
   pool: { title: 'Pool',  key: 'pool' },
   bridge: { title: 'Bridge',  key: 'bridge' },
   reward: { title: 'Reward',  key: 'reward' },
-  trade: { title: 'Trade',  key: 'trade' },
+  project: { title: 'Projects',  key: 'project' },
 }
 
 const overviewSections = {

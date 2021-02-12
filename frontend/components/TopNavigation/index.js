@@ -33,10 +33,10 @@ function Index({
         <svg aria-label="Home" id="logo" enableBackground="new 0 0 300 300" height={44} viewBox="0 0 300 300" width={44} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"/>
         <img src="https://landen.imgix.net/avz5ymmxk75u/assets/rueradx7.svg?w=104" alt='logo'/>
       </li>
-      <li data-id={sections.trade.key}
+      <li data-id={sections.project.key}
           onClick={selectNavigationSection}
-          className={getDisplayState(sections.trade.key)}>
-        <a>{sections.trade.title}</a>
+          className={getDisplayState(sections.project.key)}>
+        <a>{sections.project.title}</a>
       </li>
       <li data-id={sections.bridge.key}
           onClick={selectNavigationSection}
