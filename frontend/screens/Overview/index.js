@@ -5,7 +5,6 @@ import navigation from "frontend/constants/navigation";
 import Sandbox from "./sandbox";
 import MintFungibleToken from "./MintFungibleToken";
 import MintDynamicToken from "./MintDynamicToken";
-import Status from "./Status";
 import Account from "./Account";
 import Assets from "./Assets";
 
