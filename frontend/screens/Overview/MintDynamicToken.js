@@ -18,7 +18,7 @@ const MintDynamicToken = () => {
         <form ref={form} onSubmit={handleSubmit} className="container mx-auto bg-white shadow rounded">
           <div className="xl:w-full border-b border-gray-300 py-5">
             <div className="flex items-center w-11/12 mx-auto">
-              <p className="text-lg text-gray-800 font-bold">Mint Dynamic Non-Fungible Token (dNFT)</p>
+              <p className="text-lg text-gray-800 font-bold">Mint Dynamic Non-Fungible Token (dNFT) HTS + HCS = ❤️</p>
             </div>
           </div>
           <div className="w-11/12 mx-auto">
@@ -54,7 +54,7 @@ const MintDynamicToken = () => {
             </div>
           </div>
           <div className="w-full py-4 sm:px-12 px-4 bg-gray-100 mt-6 flex justify-end rounded-bl rounded-br">
-            <button className="bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm focus:outline-none" type="submit">
+            <button disabled className="disabled:opacity-50 bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm focus:outline-none" type="submit">
               Mint Dynamic Non-Fungible Token (dNFT)
             </button>
           </div>
