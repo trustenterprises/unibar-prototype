@@ -63,7 +63,7 @@ function TokenDepositModal ({
   return (
     <div className="flex items-center justify-center py-8 px-4">
       <div className="md:w-80 w-full  rounded shadow-lg p-6  dark:bg-gray-800 bg-white">
-        <h1 className=" dark:text-gray-100 text-gray-800 font-bold text-lg">Claim {currentPool.token.symbol} tokens into {currentPool.name}</h1>
+        <h1 className=" dark:text-gray-100 text-gray-800 font-bold text-lg">Deposit {currentPool.token.symbol} tokens into {currentPool.name}</h1>
         <div>
           <p className=" text-xs font-semibold mt-6 pb-4 leading-4 text-indigo-700 uppercase">Number of tokens (max {maxTokens})</p>
           <div className="flex items-center justify-between  bg-gray-100  rounded-lg px-4 cursor-pointer">
