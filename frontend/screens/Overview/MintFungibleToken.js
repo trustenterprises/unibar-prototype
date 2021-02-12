@@ -109,11 +109,14 @@ function MintFungibleToken () {
               </div>
             </div>
           </div>
-          <div className="w-full py-4 sm:px-12 px-4 bg-gray-100 mt-6 flex justify-end rounded-bl rounded-br">
-            <button className="bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm focus:outline-none" type="submit">
-              Mint new fungible token
-            </button>
-          </div>
+            <div className="w-full py-4 sm:px-12 px-4 bg-gray-100 mt-6 flex justify-end rounded-bl rounded-br">
+              <button
+                disabled={!accountAuth.signature}
+                className="disabled:opacity-50 bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-2 text-sm focus:outline-none"
+                type="submit">
+                Mint new fungible token
+              </button>
+            </div>
         </form>
       </div>
     </div>
