@@ -4,9 +4,8 @@ import denyDelete from "app/middleware/denyDelete"
 import denyPut from "app/middleware/denyPut"
 import useHashgraphContext from "app/context/useHashgraphContext"
 import prepare from "app/utils/prepare"
-import GetPoolHandler from "app/handler/pool/GetPoolHandler";
+import GetPoolHandler from "app/handler/pool/getPoolHandler";
 import CreatePoolHandler from "app/handler/pool/createPoolHandler";
-import withRegisteredAccount from "app/middleware/withRegisteredAccount";
 
 const PoolResourceHandlers = {
 	[Request.GET]: GetPoolHandler,
