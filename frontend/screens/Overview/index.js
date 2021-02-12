@@ -19,13 +19,6 @@ function Index() {
     setSelectedNav(current);
   }
 
-  // const accountAuth = useRecoilValue(Recoil.selectors.selectAuthorisedAccount);
-  //
-  // const [show, setShow] = useState(false);
-  // const [product, setProduct] = useState(false);
-  // const [deliverables, setDeliverables] = useState(false);
-  // const [profile, setProfile] = useState(false);
-
   return (
     <div className="w-full bg-gray-100 pb-10">
       <div className="container px-10 mx-auto">
