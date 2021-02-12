@@ -8,7 +8,7 @@ function CreateTokenButton() {
   // const accountAuth = useRecoilValue(Recoil.selectors.selectAuthorisedAccount);
 
   const onClickCreateToken = () => {
-    createToken().then(console.log)
+    // createToken().then(console.log)
   }
 
   return (

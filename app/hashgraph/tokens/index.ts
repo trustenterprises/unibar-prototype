@@ -143,7 +143,7 @@ export type AtomicSwapTransaction = {
 async function atomicSwap(client, {
   buyerSendState,
   poolSendState,
-}: AtomicSwapTransaction) {
+}) {
 
   const transaction = await new TransferTransaction()
     .addTokenTransfer(buyerSendState.token.token_id, buyerSendState.authorisedAccount.hedera_id, -buyerSendState.amount)
@@ -208,7 +208,7 @@ async function starburstTransfer(client, {
   rewardDistributions,
   token,
   amount
-}: StarburstTransaction) {
+}) {
 
   const transaction = await new TransferTransaction()
   transaction.addTokenTransfer(token.token_id, authorisedAccount.hedera_id, -(amount / rewardDistributions.length))
@@ -255,7 +255,7 @@ async function transferToken(client, {
   receiver,
   token,
   amount
-}: TransferTokenOrder) {
+}) {
 
   const transaction = await new TransferTransaction()
     .addTokenTransfer(token.token_id, authorisedAccount.hedera_id, -amount)
