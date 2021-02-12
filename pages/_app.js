@@ -1,14 +1,19 @@
+import React from "react";
+import { RecoilRoot } from 'recoil';
+import { ToastContainer } from 'react-toastify';
+import App from 'frontend'
 import "tailwindcss/tailwind.css";
 import '../styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css';
 
-import { RecoilRoot } from 'recoil';
 
-function MyApp({ Component, pageProps }) {
+function Index({ pageProps }) {
   return (
     <RecoilRoot>
-      <Component {...pageProps} />
+      <App {...pageProps} />
+      <ToastContainer />
     </RecoilRoot>
   )
 }
 
-export default MyApp
+export default Index

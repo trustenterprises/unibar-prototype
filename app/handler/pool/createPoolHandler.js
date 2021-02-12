@@ -16,7 +16,9 @@ async function CreatePoolHandler(req, res) {
   }
 
   const {
-    token_id
+    token_id,
+    name,
+    description
   } = req.body
 
   const token = await TokenData.find(token_id)
@@ -49,13 +51,15 @@ async function CreatePoolHandler(req, res) {
     public_key: accountWithKeys.publicKey
   })
 
-  // Link account to pool
-  await PoolData.createPool({
-    name: `${token.symbol} Pool`,
+  const pool = {
+    name: name || `${token.symbol} Pool`,
     amount: 0,
     tokenId: token.id,
     accountId: account.id
-  })
+  }
+
+  // Link account to pool
+  await PoolData.createPool(pool)
 
   // Associate target token to pool
   await hashgraphClient.associateToAccount({
@@ -64,7 +68,7 @@ async function CreatePoolHandler(req, res) {
     accountId: account.hedera_id
   })
 
-  Response.json(res, "ok")
+  Response.json(res, pool)
 }
 
 export default prepare(

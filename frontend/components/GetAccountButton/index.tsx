@@ -1,14 +1,17 @@
 import React from "react";
 import { getAccounts } from "app/services/hashgraph/account";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import Recoil from "app/recoil";
 
 function GetAccountButton() {
+  const [_, setAccount] = useRecoilState(Recoil.atoms.accountData);
 
   const accountAuth = useRecoilValue(Recoil.selectors.selectAuthorisedAccount);
 
   const onClickGetAccount = () => {
-    getAccounts(accountAuth).then(console.log)
+    getAccounts(accountAuth).then(account => {
+      setAccount(account.data)
+    })
   }
 
   return (

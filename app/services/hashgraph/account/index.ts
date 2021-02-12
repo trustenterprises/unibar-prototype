@@ -4,7 +4,6 @@
  * - Creating an account and linking to an ethereum address
  */
 import axios from "axios";
-
 /**
  * Creates a new HBAR account for a user and associates with their ethereum account.
  *
@@ -15,10 +14,12 @@ import axios from "axios";
  * @param signature
  */
 export async function createAccount(signature) {
+
   try {
     const response = await axios.post('api/account', signature)
 
-    // Recoil saving?
+    console.log(response.data);
+    return response.data
 
   } catch (exception) {
 
@@ -36,10 +37,8 @@ export async function getAccounts(signature) {
   try {
     const response = await axios.get('api/account', { params: signature })
 
-    // Recoil saving?
-    console.log(response);
+    return response.data
   } catch (exception) {
-
     console.log("Account not found, have you registered?");
   }
 }
