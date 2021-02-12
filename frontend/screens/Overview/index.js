@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import FormCard from "frontend/components/Forms/FormCard";
 import ScreenNavigation from "frontend/components/ScreenNavigation";
 import navigation from "frontend/constants/navigation";
-import Sandbox from "./sandbox";
 import MintFungibleToken from "./MintFungibleToken";
 import MintDynamicToken from "./MintDynamicToken";
 import Account from "./Account";
