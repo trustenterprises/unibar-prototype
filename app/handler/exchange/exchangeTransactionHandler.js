@@ -3,6 +3,7 @@ import PoolData from "app/database/pool";
 import TokenData from "app/database/tokens";
 import createExchangeTransactionRequest from "app/validators/exchange/createExchangeTransactionRequest";
 import ExchangeTransactionService from "app/services/hashgraph/exchange/exchangeTransactionService";
+import Specification from "app/hashgraph/tokens/specifications";
 
 async function ExchangeTransactionHandler(req, res) {
 
@@ -34,17 +35,21 @@ async function ExchangeTransactionHandler(req, res) {
     return Response.unprocessibleEntity(res, { error:  `Pool with token_id: ${pool_token_id} does not exist` })
   }
 
-  const holding = await TokenData.getUserTokenHolding({
-    amount: "",
-    tokenId: token.id,
-    accountId: authorisationAccount.userId
-  })
 
-  const proposedAmount = amount * 10 ** holding.token.decimals
 
-  if (proposedAmount > holding.amount ) {
-    return Response.unprocessibleEntity(res, { error:  `Unable to make transfer as your balance isn't high enough` })
-  }
+  // TODO: This needs to be fixed.
+  // const holding = await TokenData.getUserTokenHolding({
+  //   amount: "",
+  //   tokenId: token.id,
+  //   accountId: authorisationAccount.userId
+  // })
+
+  // Bypass balance for now.
+  const proposedAmount = amount * 10 ** Specification.Fungible.decimals
+
+  // if (proposedAmount > holding.amount ) {
+  //   return Response.unprocessibleEntity(res, { error:  `Unable to make transfer as your balance isn't high enough` })
+  // }
 
   // TODO: We need a check for synthetic assets, with price data.
 
@@ -57,6 +62,7 @@ async function ExchangeTransactionHandler(req, res) {
     authorisationAccount,
     amount: proposedAmount
   })
+
 
   await service.enablePoolAuthentication()
 
