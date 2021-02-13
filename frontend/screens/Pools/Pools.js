@@ -24,6 +24,7 @@ function Pools() {
   }
 
   const tokenHoldings = new Set(account?.holdings?.map(holding => holding.token.token_id))
+  const tokenSymbols = new Set(account?.holdings?.map(holding => holding.token.symbol))
 
   const onDeposit = pool => {
     setShowDeposit(true)
@@ -113,7 +114,7 @@ function Pools() {
             </div>
             <div className="items-center px-4 pb-4 flex flex-wrap">
               {/* Code block for gray button starts */}
-              {parseInt(pool.amount) > 0 && tokenHoldings.has(pool.token.token_id) &&
+              {parseInt(pool.amount) > 0 && tokenSymbols.has(`${pool.token.symbol}:LP:RECEIPT`) &&
                 <button className="mx-2 my-2 bg-red-100 transition duration-150 ease-in-out hover:bg-red-200 rounded border border-red-300 text-red-600 px-5 py-1 text-xs" onClick={() => onClaim(pool)}>Claim</button>
               }
               {/* Code block for gray button ends */}
