@@ -105,6 +105,12 @@ class ClaimTokensService {
 
     const amountFromPercentage = parseInt(token.amount) / 100 * this.percentage
 
+    await this.hashgraphClient.associateToAccount({
+      tokenIds: [ token.token.token_id ],
+      accountId: this.authorisationAccount.hedera_id,
+      privateKey: this.authorisationAccount.private_key
+    })
+
     // Pool sends tokens to holder
     await this.hashgraphClient.transferToken({
       authorisedAccount: this.pool.account,
