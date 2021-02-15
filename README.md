@@ -2,6 +2,8 @@
 
 If you need a gasless interface, inbuilt private key management and basic ethereum auth. With minting, management, pooling and mint API capibility  
 
+[Watch a basic walkthrough of the web app prototype](https://www.youtube.com/watch?v=-FWGs-bLzjI)
+
 ### Postman
 
 https://documenter.getpostman.com/view/416758/TW74ijpG
