@@ -52,6 +52,7 @@ async function ClaimRewardTransactionHandler(req, res) {
   const { hashgraphClient } = req.context
 
   const service = new ClaimTokensService({
+    holding: holding,
     token: holding.token,
     percentage: removePercentageOfPool,
     hashgraphClient,
