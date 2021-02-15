@@ -38,7 +38,7 @@ function Assets() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm leading-none text-gray-500 dark:text-gray-400">{holding.token.symbol}</p>
-                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">{(holding.amount / 10 ** holding.token.decimals).toFixed(3) }</p>
+                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">{parseFloat((holding.amount / 10 ** holding.token.decimals).toFixed(3))}</p>
                 </div>
                 <div className="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="21" height="17" viewBox="0 0 21 17"

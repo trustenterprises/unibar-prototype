@@ -100,7 +100,7 @@ function Pools() {
                 <div>
                   <p className="text-sm leading-none text-gray-500 dark:text-gray-400">{pool.name}</p>
                   <p className="text-sm leading-none text-gray-500 dark:text-gray-200">({pool.token.symbol})</p>
-                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">{(pool.amount / 10 ** pool.token.decimals).toFixed(3)}</p>
+                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">{parseFloat((pool.amount / 10 ** pool.token.decimals).toFixed(3))}</p>
                 </div>
                 <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
