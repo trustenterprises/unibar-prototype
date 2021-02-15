@@ -7,6 +7,7 @@ class ClaimTokensService {
 
   private readonly hashgraphClient
   private readonly token
+  private readonly holding
 
   // The percent of rewards and
   private readonly percentage
@@ -23,8 +24,10 @@ class ClaimTokensService {
     proxyPoolAccount,
     pool,
     token,
+    holding,
     percentage
   }) {
+    this.holding = holding
     this.hashgraphClient = hashgraphClient
     this.authorisationAccount = authorisationAccount
     this.proxyPoolAccount = proxyPoolAccount
@@ -56,13 +59,13 @@ class ClaimTokensService {
   }
 
   sendReceiptToProxy() {
-    const amountFromPercentage = parseInt(this.token.supply) / 100 * this.percentage
+    const amountFromPercentage = parseInt(this.holding.amount) / 100 * this.percentage
 
     return this.hashgraphClient.transferToken({
       authorisedAccount: this.authorisationAccount,
       receiver: this.proxyPoolAccount,
       token: this.token,
-      amount: amountFromPercentage * 10 ** this.token.decimals
+      amount: amountFromPercentage
     })
   }
 
@@ -89,7 +92,7 @@ class ClaimTokensService {
         authorisedAccount: this.proxyPoolAccount,
         receiver: this.authorisationAccount,
         token: validRewardableToken.token,
-        amount: amountFromPercentage * 10 ** this.token.decimals
+        amount: amountFromPercentage
       })
     })
 
