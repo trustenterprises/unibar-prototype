@@ -66,6 +66,27 @@ function TokenSwapModal ({
       // closeModal()
     })
   }
+
+  const switchSelectedToken = (event) => {
+
+    const { options } = event.target;
+    const selected = options[event.target.selectedIndex];
+    const { tokenId } = selected.dataset;
+
+    if (!tokenId) {
+      return setcurrentToken({})
+    }
+
+    // TODO: Ideally we'd have a key => holding representation for O(1) reading
+    const holding = holdingsWithBalance.filter(holding => holding.token.id === parseInt(tokenId))
+
+    if (holding.length) {
+      return setcurrentToken(holding[0])
+    }
+
+    return setcurrentToken({})
+  }
+
   return (
     <div className="flex items-center justify-center py-8 px-4">
       <div className="md:w-80 w-full  rounded shadow-lg p-6  dark:bg-gray-800 bg-white">
@@ -75,10 +96,11 @@ function TokenSwapModal ({
         <div>
           <div className="relative flex items-center justify-center ">
             <select
+              onChange={switchSelectedToken}
               className=" rounded-lg bg-gray-100 py-3.5 bg-transparent outline-none font-medium text-base px-4 text-white my-6 appearance-none relative w-full  dark:text-gray-100 text-gray-800">
-              <option className="text-base font-medium  dark:text-gray-100 text-gray-800" onClick={() => setcurrentToken({})}>Select a token</option>
+              <option key={0} className="text-base font-medium  dark:text-gray-100 text-gray-800">Select a token</option>
               { holdingsWithBalance.map(holding =>
-                <option className="text-base font-medium  dark:text-gray-100 text-gray-800" onClick={() => setcurrentToken(holding)}>{holding.token.symbol}({holding.amount / 10 ** holding.token.decimals})</option>
+                <option key={holding.token.id} data-token-id={holding.token.id} className="text-base font-medium  dark:text-gray-100 text-gray-800">{holding.token.symbol}({holding.amount / 10 ** holding.token.decimals})</option>
               )}
             </select>
             <div className="absolute right-0  mr-4 pointer-events-none">
