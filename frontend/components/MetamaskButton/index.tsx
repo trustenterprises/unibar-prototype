@@ -53,7 +53,9 @@ function Web3Authorisation() {
     setActivatingConnector(injected)
 
     activate(injected)
+  }
 
+  const signWithMetamask = () => {
     const onSuccess = (signature) => {
       setSignature(signature)
 
@@ -78,7 +80,8 @@ function Web3Authorisation() {
       })
     }
 
-    getPools()
+    // TODO: Don't think we need this...
+    // getPools()
 
     generateSignature({
       library,
@@ -89,9 +92,15 @@ function Web3Authorisation() {
 
   return (
     <div className="mt-6 lg:mt-0">
-      <button
-        className="focus:outline-none transition duration-150 ease-in-out hover:bg-gray-200 border bg-white rounded text-gray-900 px-8 py-2 text-sm"
-        onClick={onClickActivate}>Authorize with Metamask 🚀</button>
+      {account ?
+        <button
+          className="focus:outline-none transition duration-150 ease-in-out hover:bg-gray-200 border bg-white rounded text-gray-900 px-8 py-2 text-sm"
+          onClick={signWithMetamask}>Authorize with Metamask 🚀</button>
+        :
+        <button
+          className="focus:outline-none transition duration-150 ease-in-out hover:bg-gray-200 border bg-white rounded text-gray-900 px-8 py-2 text-sm"
+          onClick={onClickActivate}>Connect Metamask 🚀</button>
+      }
     </div>
   );
 }
