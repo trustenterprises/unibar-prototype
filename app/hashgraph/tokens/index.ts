@@ -114,7 +114,7 @@ export type AssociateToken = {
   privateKey: string;
 }
 
-// Before transferring token to other account association is require
+// Before transferring token to other account association is required
 async function associateToAccount(client, association: AssociateToken) {
   const transaction = await new TokenAssociateTransaction()
     .setAccountId(association.accountId)
