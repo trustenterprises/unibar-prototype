@@ -9,6 +9,14 @@ type Account = {
   public_key: string
 }
 
+function accountExists(hedera_id: string) {
+  return prisma.account.findFirst({
+    where: {
+      hedera_id
+    }
+  })
+}
+
 function createHederaAccount(account: Account) {
   return prisma.account.create({
     data: account
@@ -16,7 +24,8 @@ function createHederaAccount(account: Account) {
 }
 
 export default {
-  createHederaAccount
+  createHederaAccount,
+  accountExists
 }
 
 
