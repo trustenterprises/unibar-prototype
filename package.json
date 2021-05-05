@@ -17,7 +17,7 @@
   "dependencies": {
     "@ethersproject/providers": "^5.0.2",
     "@hapi/joi": "^17.1.1",
-    "@hashgraph/sdk": "^2.0.14",
+    "@hashgraph/sdk": "^2.0.19",
     "@prisma/client": "^2.15.0",
     "@web3-react/core": "latest",
     "@web3-react/injected-connector": "latest",
