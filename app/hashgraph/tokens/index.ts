@@ -18,6 +18,7 @@ export type TokenCreation = {
   accountId: string;
   privateKey: string;
   name: string;
+  memo: string | null;
   symbol: string;
   supply: number;
   can_freeze: boolean | null;
@@ -49,6 +50,7 @@ async function createToken(client, tokenCreation: TokenCreation): Promise<Create
     specification,
     accountId,
     privateKey,
+    memo,
     name,
     symbol,
     supply,
@@ -68,6 +70,11 @@ async function createToken(client, tokenCreation: TokenCreation): Promise<Create
     .setDecimals(specification.decimals)
     .setFreezeDefault(false)
     .setMaxTransactionFee(new Hbar(30)) //Change the default max transaction fee
+
+  if (memo) {
+    transaction.setTokenMemo(memo)
+    transaction.setTransactionMemo(memo)
+  }
 
   if (requires_kyc) {
     transaction.setKycKey(operatorPrivateKey.publicKey)
@@ -90,6 +97,7 @@ async function createToken(client, tokenCreation: TokenCreation): Promise<Create
   return {
     name,
     symbol,
+    memo,
     supply: String(supply),
     supplyWithDecimals: String(supplyWithDecimals),
     tokenId: receipt.tokenId.toString(),

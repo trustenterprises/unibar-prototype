@@ -6,6 +6,7 @@ const TRILLION = 10 ** 12
 const schema = Joi.object({
 	symbol: Joi.string().max(100).required(),
 	name: Joi.string().max(100).required(),
+	memo: Joi.string().max(100).optional(),
 	price: Joi.number().precision(6).positive().required(),
 	supply: Joi.number().positive().max(TRILLION).min(1).required(),
 	requires_kyc: Joi.bool().default(false),

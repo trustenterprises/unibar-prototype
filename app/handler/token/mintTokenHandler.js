@@ -15,6 +15,7 @@ async function MintTokenHandler(req, res) {
 		name,
 		price,
 		supply,
+		memo,
 		requires_kyc = false,
 		can_freeze = false,
 		// linked_token_id // I want to link the price to be pegged to .01 ETH
@@ -28,6 +29,7 @@ async function MintTokenHandler(req, res) {
 		accountId: hedera_id,
 		specification: Specification.Fungible,
 		privateKey: private_key,
+		memo,
 		name,
 		symbol,
 		price,
