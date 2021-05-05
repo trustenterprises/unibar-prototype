@@ -1,3 +1,19 @@
+# SportsIcon NFT issuance API
+
+This projects is a fork of the Unibar Prototype for hedera21 hackathon.
+
+It has a capability for NFT token issuance and account managements.
+
+##
+
+## Postman Documentation
+
+Use the link below to get access to Postman.
+
+https://www.getpostman.com/collections/e83d73c05489c8ea7242
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -17,6 +33,43 @@ You can start editing the page by modifying `pages/index.ts`. The page auto-upda
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Prisma 
+
+We use prisma as the persistence layer for the NextJS app. Going forward it is we may slowly remove our dependency on storage.
+ 
+
+For development update your **datasource** in `prisma/schema.prisma` to sqlite below 👇
+
+```
+//datasource db {
+//  provider = "postgresql"
+//  url      = env("DATABASE_URL")
+//}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+```
+
+### Generate Prisma Models
+
+Run the generate command to generate the persistence models, note if you reinstall with `yarn` or `npm i` you may have to rerun this command.
+
+```
+yarn prisma:generate
+```
+
+### Start the Prisma Studio
+
+This will give you a yummy UI to view the models and to update accordingly.
+
+It will run on ``localhost:5555``
+
+```
+yarn prisma:studio
+```
 
 ## Learn More
 
