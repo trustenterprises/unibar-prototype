@@ -2,6 +2,7 @@ import Response from "app/response"
 import Request from "app/constants/request"
 import denyDelete from "app/middleware/denyDelete"
 import denyPut from "app/middleware/denyPut"
+import checkSignature from "app/middleware/checkSignature"
 import useHashgraphContext from "app/context/useHashgraphContext"
 import prepare from "app/utils/prepare"
 import CreateAccountHandler from "app/handler/account/createAccountHandler";
@@ -27,5 +28,6 @@ function AccountResource(req, res) {
 export default prepare(
 	denyPut,
 	denyDelete,
-	useHashgraphContext
+	useHashgraphContext,
+	checkSignature
 )(AccountResource)

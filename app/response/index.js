@@ -21,8 +21,8 @@ function unprocessibleEntity(res, errors) {
 	return res.status(Status.UNPROCESSIBLE_ENTITY).send({ errors })
 }
 
-function badRequest(res) {
-	return res.status(Status.BAD_REQUEST).send({})
+function badRequest(res, errors = undefined) {
+	return res.status(Status.BAD_REQUEST).send({errors})
 }
 
 function json(res, data) {
