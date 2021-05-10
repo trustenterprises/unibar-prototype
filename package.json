@@ -13,7 +13,7 @@
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "prisma:build": "prisma generate",
     "prisma:studio": "prisma studio",
-    "prisma:reset" : "prisma reset",
+    "prisma:reset": "prisma migrate reset",
     "prisma:format": "prisma format"
   },
   "dependencies": {
