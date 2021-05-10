@@ -12,7 +12,9 @@
     "test:all": "jest --coverage --runInBand --detectOpenHandles",
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "prisma:build": "prisma generate",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "prisma:reset" : "prisma reset",
+    "prisma:format": "prisma format"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.0.2",
@@ -26,10 +28,10 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^2.9.4",
     "dotenv": "^8.2.0",
-    "next": "10.0.5",
+    "next": "^10.0.5",
     "postcss": "^8.2.4",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-qr-image": "^1.0.2",
     "react-toastify": "^7.0.3",
     "recoil": "^0.1.2",
@@ -39,7 +41,6 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/plugin-transform-react-jsx": "^7.10.4",
-    "@prisma/cli": "^2.15.0",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "babel-eslint": "^9.0.0",
@@ -55,6 +56,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.4.0",
     "node-mocks-http": "^1.8.1",
+    "prisma": "^2.22.1",
     "typescript": "^4.1.3"
   }
 }
