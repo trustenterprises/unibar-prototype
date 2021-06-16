@@ -7,7 +7,7 @@ export type Specification = {
   kyc: boolean;
   wipe: boolean;
   freeze: boolean;
-}
+};
 
 /**
  * TODO: more conversations and design about interop and bridging required to reduce precision loss
@@ -27,12 +27,12 @@ export type Specification = {
  * @type {{decimals: number}}
  */
 const Fungible: Specification = {
-  reference: 'basic.fungible',
+  reference: "basic.fungible",
   decimals: 6,
   kyc: false,
   wipe: false,
-  freeze: false
-}
+  freeze: false,
+};
 
 /**
  * When creating NFT representations of tokens we require a token to be unique
@@ -41,12 +41,12 @@ const Fungible: Specification = {
  * @type {{decimals: number}}
  */
 const NonFungible: Specification = {
-  reference: 'basic.nonfungible',
+  reference: "basic.nonfungible",
   decimals: 0,
   kyc: false,
   wipe: false,
-  freeze: false
-}
+  freeze: false,
+};
 
 /**
  * A KYC, freeze and wipe compliant fungible token, based on ERC20 that enables a token that has more control
@@ -56,11 +56,11 @@ const NonFungible: Specification = {
  */
 const CompliantFungible: Specification = {
   ...Fungible,
-  reference: 'compliance.fungible',
+  reference: "compliance.fungible",
   kyc: true,
   wipe: true,
-  freeze: true
-}
+  freeze: true,
+};
 
 /**
  * A KYC, freeze and wipe compliant fungible token, based on ERC721/Non fungible that enables a token
@@ -70,11 +70,11 @@ const CompliantFungible: Specification = {
  */
 const CompliantNonFungible: Specification = {
   ...NonFungible,
-  reference: 'compliance.nonfungible',
+  reference: "compliance.nonfungible",
   kyc: true,
   wipe: true,
-  freeze: true
-}
+  freeze: true,
+};
 
 /**
  * A special token that acts as a receipt for deposited assets in a pool. These
@@ -85,13 +85,13 @@ const CompliantNonFungible: Specification = {
  */
 const UnibarLiquidityProviderReceipt: Specification = {
   ...NonFungible,
-  reference: 'lp.reward.receipt',
-}
+  reference: "lp.reward.receipt",
+};
 
 export default {
   Fungible,
   NonFungible,
   CompliantFungible,
   CompliantNonFungible,
-  UnibarLiquidityProviderReceipt
-}
+  UnibarLiquidityProviderReceipt,
+};

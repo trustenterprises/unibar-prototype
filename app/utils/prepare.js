@@ -11,6 +11,9 @@
  *
  */
 
-const prepare = (...fns) => x => fns.reverse().reduce((v, f) => f(v), x)
+const prepare =
+  (...fns) =>
+  x =>
+    fns.reverse().reduce((v, f) => f(v), x);
 
-export default prepare
+export default prepare;

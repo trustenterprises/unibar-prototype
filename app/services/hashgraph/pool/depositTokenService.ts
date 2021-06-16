@@ -6,38 +6,32 @@ import Config from "app/config";
 import Specification from "app/hashgraph/tokens/specifications";
 
 class DepositTokenService {
+  private readonly hashgraphClient;
+  private readonly authorisationAccount;
+  private readonly pool;
+  private readonly token;
 
-  private readonly hashgraphClient
-  private readonly authorisationAccount
-  private readonly pool
-  private readonly token
-
-  constructor({
-    hashgraphClient,
-    authorisationAccount,
-    pool,
-    token
-  }) {
-    this.hashgraphClient = hashgraphClient
-    this.authorisationAccount = authorisationAccount
-    this.pool = pool
-    this.token = token
+  constructor({ hashgraphClient, authorisationAccount, pool, token }) {
+    this.hashgraphClient = hashgraphClient;
+    this.authorisationAccount = authorisationAccount;
+    this.pool = pool;
+    this.token = token;
   }
 
   // Possibly use exists or count
   checkForRewardLiquidityPoolExists() {
     return PoolData.getRewardLiquidityPool({
       account: this.authorisationAccount,
-      pool: this.pool
-    })
+      pool: this.pool,
+    });
   }
 
   getUserTokenHolding() {
     return TokenData.getUserTokenHolding({
       tokenId: this.token.id,
       accountId: this.authorisationAccount.id,
-      amount: ""
-    })
+      amount: "",
+    });
   }
 
   transferTokensToPool(proposedAmount) {
@@ -45,48 +39,42 @@ class DepositTokenService {
       authorisedAccount: this.authorisationAccount,
       receiver: this.pool.account,
       token: this.token,
-      amount: proposedAmount
-    })
+      amount: proposedAmount,
+    });
   }
 
   updatePoolValue(proposedAmount) {
     return PoolData.depositToPool({
       pool: this.pool,
-      amount: proposedAmount
-    })
+      amount: proposedAmount,
+    });
   }
 
   async createNewRewardPoolAccount() {
     // Rewards will be sent to this pool
-    const proxyLiquidityPool = await this.hashgraphClient._createNewAccount()
+    const proxyLiquidityPool = await this.hashgraphClient._createNewAccount();
 
     // Encrypt private key via treasury
     const encrypted = await Sodium.encrypt({
       message: proxyLiquidityPool.privateKey,
-      signature: Config.privateKey
-    })
+      signature: Config.privateKey,
+    });
 
     // Store account details
     const account = await AccountData.createHederaAccount({
       userId: undefined,
       hedera_id: proxyLiquidityPool.accountId,
       enc_skey: encrypted,
-      public_key: proxyLiquidityPool.publicKey
-    })
+      public_key: proxyLiquidityPool.publicKey,
+    });
 
     return {
       proxyLiquidityPool,
-      account
-    }
+      account,
+    };
   }
 
-  async createLpToken({
-    proxyLiquidityPool,
-    account,
-    amount,
-    proposedAmount
-  }) {
-
+  async createLpToken({ proxyLiquidityPool, account, amount, proposedAmount }) {
     const lpToken = await this.hashgraphClient.createToken({
       accountId: proxyLiquidityPool.accountId,
       specification: Specification.Fungible,
@@ -94,8 +82,8 @@ class DepositTokenService {
       name: `${this.token.symbol} LP RECEIPT`,
       symbol: `${this.token.symbol}:LP:RECEIPT`,
       price: 0,
-      supply: amount
-    })
+      supply: amount,
+    });
 
     const stored = await TokenData.storeToken({
       creatorId: account.id,
@@ -109,35 +97,32 @@ class DepositTokenService {
       supplyWithDecimals: String(proposedAmount),
       symbol: `${this.token.symbol}:LP:RECEIPT`,
       token_id: lpToken.tokenId,
-      asset_contract: undefined
-    })
+      asset_contract: undefined,
+    });
 
     await TokenData.addHolding({
       tokenId: stored.id,
       amount: String(proposedAmount),
-      accountId: account.id
-    })
+      accountId: account.id,
+    });
 
     await this.hashgraphClient.associateToAccount({
-      tokenIds: [ stored.token_id ],
+      tokenIds: [stored.token_id],
       accountId: this.authorisationAccount.hedera_id,
-      privateKey: this.authorisationAccount.private_key
-    })
+      privateKey: this.authorisationAccount.private_key,
+    });
 
-    return stored
+    return stored;
   }
 
-  createRewardLiquidityPool({
-    account,
-    proposedAmount
-  }) {
+  createRewardLiquidityPool({ account, proposedAmount }) {
     return PoolData.createRewardLiquidityPool({
       depositeeAccount: this.authorisationAccount,
       escrowAccount: account,
       pool: this.pool,
       price: 0,
-      amount: proposedAmount
-    })
+      amount: proposedAmount,
+    });
   }
 
   transferLpTokenToDepositee({
@@ -150,15 +135,13 @@ class DepositTokenService {
       authorisedAccount: {
         ...account,
         private_key: proxyLiquidityPool.privateKey,
-        token_id: stored.hedera_id
+        token_id: stored.hedera_id,
       },
       receiver: this.authorisationAccount,
       token: stored,
-      amount: proposedAmount
-    })
+      amount: proposedAmount,
+    });
   }
-
-
 }
 
-export default DepositTokenService
+export default DepositTokenService;

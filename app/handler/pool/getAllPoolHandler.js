@@ -1,11 +1,10 @@
-import Response from "app/response"
+import Response from "app/response";
 import PoolData from "app/database/pool";
 
 async function GetAllPoolsHandler(req, res) {
+  const pools = await PoolData.all();
 
-  const pools = await PoolData.all()
-
-  return Response.json(res, pools)
+  return Response.json(res, pools);
 }
 
-export default GetAllPoolsHandler
+export default GetAllPoolsHandler;

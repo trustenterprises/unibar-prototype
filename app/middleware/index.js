@@ -1,5 +1,5 @@
-import withAuthentication from "./withAuthentication"
+import withAuthentication from "./withAuthentication";
 
 export default {
-	withAuthentication
-}
+  withAuthentication,
+};

@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 type TokenStore = {
   initial_price: number;
@@ -15,39 +15,38 @@ type TokenStore = {
   has_kyc: boolean;
   has_freeze: boolean;
   creatorId: number;
-}
+};
 
 type Holding = {
   tokenId: number;
   amount: string;
   accountId: number;
-}
+};
 
 function storeToken(token) {
   return prisma.token.create({
-    data: token
-  })
+    data: token,
+  });
 }
 
 function addHolding(holding) {
   return prisma.holding.create({
-    data: holding
-  })
+    data: holding,
+  });
 }
 
 async function adjustHolding(holding) {
-
-  const { accountId, tokenId, amount } = holding
+  const { accountId, tokenId, amount } = holding;
 
   const current = await prisma.holding.findFirst({
     where: {
       accountId,
-      tokenId
-    }
-  })
+      tokenId,
+    },
+  });
 
   if (!current) {
-    return addHolding(holding)
+    return addHolding(holding);
   }
 
   return prisma.holding.update({
@@ -55,15 +54,15 @@ async function adjustHolding(holding) {
     data: {
       ...current,
       // @ts-ignore
-      amount: parseFloat(current.amount) + parseFloat(holding.amount)
-    }
-  })
+      amount: parseFloat(current.amount) + parseFloat(holding.amount),
+    },
+  });
 }
 
 function find(token_id) {
   return prisma.token.findFirst({
     where: {
-      token_id
+      token_id,
     },
     include: {
       Pool: {
@@ -71,23 +70,23 @@ function find(token_id) {
           tokenId: true,
           account: true,
           amount: true,
-          id: true
-        }
-      }
-    }
-  })
+          id: true,
+        },
+      },
+    },
+  });
 }
 
 function getUserTokenHolding(holdingQry) {
   return prisma.holding.findFirst({
     where: {
       tokenId: holdingQry.tokenId,
-      accountId: holdingQry.accountId
+      accountId: holdingQry.accountId,
     },
     include: {
-      token: true
-    }
-  })
+      token: true,
+    },
+  });
 }
 
 export default {
@@ -95,7 +94,5 @@ export default {
   addHolding,
   find,
   getUserTokenHolding,
-  adjustHolding
-}
-
-
+  adjustHolding,
+};

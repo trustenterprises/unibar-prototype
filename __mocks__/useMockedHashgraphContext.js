@@ -1,16 +1,15 @@
-import HashgraphClient from "./hashgraphClient"
+import HashgraphClient from "./hashgraphClient";
 
 function useMockedHashgraphContext(handler) {
-	return async (req, res) => {
+  return async (req, res) => {
+    const hashgraphClient = new HashgraphClient();
 
-		const hashgraphClient = new HashgraphClient()
+    req.context = {
+      hashgraphClient,
+    };
 
-		req.context = {
-			hashgraphClient
-		}
-
-		return handler(req, res)
-	}
+    return handler(req, res);
+  };
 }
 
-export default useMockedHashgraphContext
+export default useMockedHashgraphContext;

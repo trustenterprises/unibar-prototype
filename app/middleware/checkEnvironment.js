@@ -1,7 +1,7 @@
 function checkEnvironment(req, res) {
-	// throw new Error("Environment variables myAccountId and myPrivateKey must be present");
+  // throw new Error("Environment variables myAccountId and myPrivateKey must be present");
 
-	return false
+  return false;
 }
 
-export default { checkEnvironment }
+export default { checkEnvironment };

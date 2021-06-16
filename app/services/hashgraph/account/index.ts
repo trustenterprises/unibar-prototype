@@ -14,16 +14,15 @@ import axios from "axios";
  * @param signature
  */
 export async function createAccount(signature) {
-
   try {
-    const response = await axios.post('api/account', signature)
+    const response = await axios.post("api/account", signature);
 
     console.log(response.data);
-    return response.data
-
+    return response.data;
   } catch (exception) {
-
-    console.log("Failed to create new account, is this eth address already registered?");
+    console.log(
+      "Failed to create new account, is this eth address already registered?"
+    );
   }
 }
 
@@ -35,9 +34,9 @@ export async function createAccount(signature) {
  */
 export async function getAccounts(signature) {
   try {
-    const response = await axios.get('api/account', { params: signature })
+    const response = await axios.get("api/account", { params: signature });
 
-    return response.data
+    return response.data;
   } catch (exception) {
     console.log("Account not found, have you registered?");
   }

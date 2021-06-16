@@ -1,13 +1,10 @@
 // Mocked request for setting headers
 
-const mockedApiRequest = ({
-  mock: (
-    headers = {},
-    method = "GET"
-  ) => ({
+const mockedApiRequest = {
+  mock: (headers = {}, method = "GET") => ({
     headers,
-    method
-  })
-})
+    method,
+  }),
+};
 
-export default mockedApiRequest
+export default mockedApiRequest;

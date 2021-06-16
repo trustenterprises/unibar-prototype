@@ -1,48 +1,60 @@
 import React, { useState } from "react";
-import CreateAccountButton from "frontend/components/CreateAccountButton"
-import GetAccountButton from "frontend/components/GetAccountButton"
+import CreateAccountButton from "frontend/components/CreateAccountButton";
+import GetAccountButton from "frontend/components/GetAccountButton";
 import CreateTokenButton from "frontend/components/CreateTokenButton";
-import Recoil from "app/recoil"
-import { useRecoilValue } from 'recoil';
+import Recoil from "app/recoil";
+import { useRecoilValue } from "recoil";
 import FormCard from "frontend/components/Forms/FormCard";
 import ScreenNavigation from "frontend/components/ScreenNavigation";
 import navigation from "frontend/constants/navigation";
 import TokenSummary from "../../components/Stats/TokenSummary";
 
 function Assets() {
-
   // const accountAuth = useRecoilValue(Recoil.selectors.selectAuthorisedAccount);
   const accountData = useRecoilValue(Recoil.selectors.selectAccountData);
 
   if (!accountData.accounts) {
     return (
       <div className="bg-white w-full h-full rounded shadow px-12 pb-12">
-        <div className="pt-12 text-center text-lg font-bold leading-4 dark:text-gray-100 text-gray-800">Please Authorize with Metamask 👆 ❤️</div>
+        <div className="pt-12 text-center text-lg font-bold leading-4 dark:text-gray-100 text-gray-800">
+          Please Authorize with Metamask 👆 ❤️
+        </div>
       </div>
-    )
+    );
   }
 
-  const { holdings, mintedTokens } = accountData.accounts[0]
-
+  const { holdings, mintedTokens } = accountData.accounts[0];
 
   return (
     <div className="bg-white w-full h-full rounded shadow px-12 pb-12">
       <TokenSummary />
 
-      <h1 className="text-lg font-bold leading-4 dark:text-gray-100 text-gray-800">Current Holdings</h1>
+      <h1 className="text-lg font-bold leading-4 dark:text-gray-100 text-gray-800">
+        Current Holdings
+      </h1>
 
       <div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-6 gap-8">
-        {holdings.map(holding =>
-          <div className="rounded shadow border-2" >
+        {holdings.map(holding => (
+          <div className="rounded shadow border-2">
             <div className="bg-white dark:bg-gray-800  rounded py-6 px-8">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm leading-none text-gray-500 dark:text-gray-400">{holding.token.symbol}</p>
-                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">{parseFloat((holding.amount / 10 ** holding.token.decimals).toFixed(3))}</p>
+                  <p className="text-sm leading-none text-gray-500 dark:text-gray-400">
+                    {holding.token.symbol}
+                  </p>
+                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">
+                    {parseFloat(
+                      (holding.amount / 10 ** holding.token.decimals).toFixed(3)
+                    )}
+                  </p>
                 </div>
                 <div className="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="17" viewBox="0 0 21 17"
-                       fill="none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="21"
+                    height="17"
+                    viewBox="0 0 21 17"
+                    fill="none">
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
@@ -53,27 +65,45 @@ function Assets() {
                 </div>
               </div>
               <div className="flex items-center pt-4">
-                <p className="text-xs font-medium leading-3 pl-1 text-gray-500 dark:text-gray-400"> Hedera ID: {holding.token.token_id}</p>
+                <p className="text-xs font-medium leading-3 pl-1 text-gray-500 dark:text-gray-400">
+                  {" "}
+                  Hedera ID: {holding.token.token_id}
+                </p>
               </div>
             </div>
           </div>
-        )}
+        ))}
       </div>
 
-      <h1 className="text-lg font-bold leading-4 dark:text-gray-100 text-gray-800 mt-12">Minted Tokens</h1>
+      <h1 className="text-lg font-bold leading-4 dark:text-gray-100 text-gray-800 mt-12">
+        Minted Tokens
+      </h1>
 
       <div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-6 gap-8">
-
-        {mintedTokens.map(minted =>
-          <div className="rounded shadow border-2" >
+        {mintedTokens.map(minted => (
+          <div className="rounded shadow border-2">
             <div className="bg-white dark:bg-gray-800  rounded py-6 px-8">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm leading-none text-gray-500 dark:text-gray-400">{minted.symbol}</p>
-                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">{minted.supply }</p>
+                  <p className="text-sm leading-none text-gray-500 dark:text-gray-400">
+                    {minted.symbol}
+                  </p>
+                  <p className="text-4xl font-semibold leading-9 pt-4 text-gray-800 dark:text-gray-100">
+                    {minted.supply}
+                  </p>
                 </div>
                 <div className="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-dashboard" width={32} height={32} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon icon-tabler icon-tabler-dashboard"
+                    width={32}
+                    height={32}
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" />
                     <circle cx={12} cy={13} r={2} />
                     <line x1="13.45" y1="11.55" x2="15.5" y2="9.5" />
@@ -81,34 +111,46 @@ function Assets() {
                   </svg>
                 </div>
               </div>
-              <p className="text-xs font-medium leading-3 pl-1 text-gray-500 dark:text-gray-400">balance</p>
+              <p className="text-xs font-medium leading-3 pl-1 text-gray-500 dark:text-gray-400">
+                balance
+              </p>
 
               <div className="items-center pt-4">
-                <p className="text-xs font-medium leading-3 pl-1 text-gray-500 dark:text-gray-400"> Hedera ID: {minted.token_id}</p>
-                <p className="text-xs font-medium leading-3 pl-1 pt-1 text-gray-500 dark:text-gray-400"> Type: {minted.spec_ref}</p>
+                <p className="text-xs font-medium leading-3 pl-1 text-gray-500 dark:text-gray-400">
+                  {" "}
+                  Hedera ID: {minted.token_id}
+                </p>
+                <p className="text-xs font-medium leading-3 pl-1 pt-1 text-gray-500 dark:text-gray-400">
+                  {" "}
+                  Type: {minted.spec_ref}
+                </p>
               </div>
               <div className="flex items-center">
-                {minted.has_freeze &&
+                {minted.has_freeze && (
                   <div className="pt-4">
                     <div className="bg-indigo-200 h-6 w-20 mb-4  mr-2  md:mb-0 rounded-md flex items-center justify-center">
-                      <span className="text-xs text-indigo-700 font-normal">Freeze</span>
+                      <span className="text-xs text-indigo-700 font-normal">
+                        Freeze
+                      </span>
                     </div>
                   </div>
-                }
-                {minted.has_kyc &&
+                )}
+                {minted.has_kyc && (
                   <div className="pt-4">
                     <div className="bg-red-200 h-6 w-20 mb-4 md:mb-0 rounded-md flex items-center justify-center">
-                      <span className="text-xs text-red-700 font-normal">KYC</span>
+                      <span className="text-xs text-red-700 font-normal">
+                        KYC
+                      </span>
                     </div>
                   </div>
-                }
+                )}
               </div>
             </div>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
 }
 
-export default Assets
+export default Assets;

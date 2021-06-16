@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom, selector } from "recoil";
 
 // Action defs
 const ACTIONS = {
@@ -9,38 +9,38 @@ const ACTIONS = {
   SELECT_ACCOUNT_AUTHORISATION: "select.authorise.signature",
   SELECT_ACCOUNT_DATA: "select.account.data",
   SELECT_ALL_POOLS_DATA: "select.allpool.data",
-}
+};
 
 // selectors
 const selectAuthorisedAccount = selector({
   key: ACTIONS.ACCOUNT_AUTHORISATION,
-  get: ({ get }) => get(signatureAuth)
+  get: ({ get }) => get(signatureAuth),
 });
 
 const selectAccountData = selector({
   key: ACTIONS.ACCOUNT_FETCH_DATA,
-  get: ({ get }) => get(accountData)
+  get: ({ get }) => get(accountData),
 });
 
 const selectAllPoolsData = selector({
   key: ACTIONS.SELECT_ALL_POOLS_DATA,
-  get: ({ get }) => get(allPoolsData)
+  get: ({ get }) => get(allPoolsData),
 });
 
 // Atoms
 const signatureAuth = atom({
   key: ACTIONS.ACCOUNT_AUTHORISATION,
-  default: {}
+  default: {},
 });
 
 const accountData = atom({
   key: ACTIONS.ACCOUNT_FETCH_DATA,
-  default: {}
+  default: {},
 });
 
 const allPoolsData = atom({
   key: ACTIONS.ALL_POOLS_FETCH_DATA,
-  default: {}
+  default: {},
 });
 
 export default {
@@ -48,11 +48,11 @@ export default {
   selectors: {
     selectAuthorisedAccount,
     selectAccountData,
-    selectAllPoolsData
+    selectAllPoolsData,
   },
   atoms: {
     signatureAuth,
     accountData,
-    allPoolsData
-  }
-}
+    allPoolsData,
+  },
+};

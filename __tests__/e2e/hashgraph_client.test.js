@@ -1,17 +1,13 @@
-import { HashgraphClient } from "app/hashgraph/client"
-import Config from "app/config"
+import { HashgraphClient } from "app/hashgraph/client";
+import Config from "app/config";
 import TokenSpec from "app/hashgraph/tokens/specifications";
 
-const client = new HashgraphClient()
+const client = new HashgraphClient();
 
 test("The client will create a new test token", async () => {
+  const { accountId, privateKey } = Config;
 
-  const {
-    accountId,
-    privateKey
-  } = Config
-
-  const baseSupply = 800
+  const baseSupply = 800;
 
   const tokenCreationInstance = {
     accountId,
@@ -19,53 +15,48 @@ test("The client will create a new test token", async () => {
     specification: TokenSpec.Fungible,
     name: "UNIBAR TOKEN",
     symbol: "UNIBAR",
-    supply: baseSupply
-  }
+    supply: baseSupply,
+  };
 
   // Block for now.
   return;
 
-	const {
+  const {
     name,
     symbol,
     supply,
     supplyWithDecimals,
     tokenId,
-    specificationReference
-  } = await client.createToken(tokenCreationInstance)
+    specificationReference,
+  } = await client.createToken(tokenCreationInstance);
 
-  const maxDecimalSupply = baseSupply * 10 ** TokenSpec.Fungible.decimals
+  const maxDecimalSupply = baseSupply * 10 ** TokenSpec.Fungible.decimals;
 
-  expect(name).toBe("UNIBAR TOKEN")
-	expect(symbol).toBe("UNIBAR")
-	expect(supply).toBe(String(baseSupply))
-	expect(specificationReference).toBe(TokenSpec.Fungible.reference)
-	expect(supplyWithDecimals).toBe(String(maxDecimalSupply))
-  expect(tokenId.split(".").length).toBe(3)
-	expect(tokenId).not.toBe(null)
+  expect(name).toBe("UNIBAR TOKEN");
+  expect(symbol).toBe("UNIBAR");
+  expect(supply).toBe(String(baseSupply));
+  expect(specificationReference).toBe(TokenSpec.Fungible.reference);
+  expect(supplyWithDecimals).toBe(String(maxDecimalSupply));
+  expect(tokenId.split(".").length).toBe(3);
+  expect(tokenId).not.toBe(null);
 
-  const { tokens } = await client.accountTokenBalance(accountId)
+  const { tokens } = await client.accountTokenBalance(accountId);
 
-  expect(tokens.get(tokenId).low).toBe(maxDecimalSupply)
+  expect(tokens.get(tokenId).low).toBe(maxDecimalSupply);
 
   // const result = await client.singleTokenQuery(tokenId)
   //
   // console.log(result);
-})
-
+});
 
 // Ignore for now -- Seems to work.
 test("The client can query a token", async () => {
   // const result = await client.singleTokenQuery('0.0.294938')
   //
   // console.log(result);
-})
+});
 
 test("The client will create a new NFT token", async () => {
-
-
-
-
   // const fs = require("fs")
   //
   // const result = await fs.readFileSync('public/UNIBAR_Initial_Pool_Design_NFT.pdf')
@@ -94,13 +85,8 @@ test("The client will create a new NFT token", async () => {
   //   supply: 800
   // }
 
-
-
-  return
-})
-
-
-
+  return;
+});
 
 // test("The client will return will return the account balance", async () => {
 // 	const { balance } = await client.accountBalanceQuery()

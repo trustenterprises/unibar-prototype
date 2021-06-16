@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 // type Pool = {
 //   name: string; // Name of the symbol
@@ -11,21 +11,22 @@ const prisma = new PrismaClient()
 type UpdatePoolAmount = {
   pool: object;
   amount: number;
-}
+};
 
 function createPool(pool) {
   return prisma.pool.create({
-    data: pool
-  })
+    data: pool,
+  });
 }
 
 async function depositToPool(poolUpdate) {
   return prisma.pool.update({
     where: { id: poolUpdate.pool.id },
     data: {
-      amount: parseFloat(poolUpdate.pool.amount) + parseFloat(poolUpdate.amount)
-    }
-  })
+      amount:
+        parseFloat(poolUpdate.pool.amount) + parseFloat(poolUpdate.amount),
+    },
+  });
 }
 
 type RewardLPPoolCreation = {
@@ -34,19 +35,18 @@ type RewardLPPoolCreation = {
   pool: object;
   price: number;
   amount: number;
-}
+};
 
 async function createRewardLiquidityPool({
   escrowAccount,
   depositeeAccount,
   pool,
   price,
-  amount
+  amount,
 }) {
-
   const escrow = await prisma.escrowTreasury.create({
-    data: { accountId: escrowAccount.id }
-  })
+    data: { accountId: escrowAccount.id },
+  });
 
   const rlpPool = await prisma.rewardLiquidityPool.create({
     data: {
@@ -55,39 +55,32 @@ async function createRewardLiquidityPool({
       escrowTreasuryId: escrow.id,
       price,
       amount,
-    }
-  })
+    },
+  });
 
-  return rlpPool
+  return rlpPool;
 }
 
-function updatePoolAmount({
-  pool,
-  amount
-}) {
-  const updatedAmount =  parseFloat(pool.amount) - parseFloat(amount)
+function updatePoolAmount({ pool, amount }) {
+  const updatedAmount = parseFloat(pool.amount) - parseFloat(amount);
 
   return prisma.pool.update({
     where: {
       id: pool.id,
     },
     data: {
-      amount: updatedAmount
-    }
-  })
+      amount: updatedAmount,
+    },
+  });
 }
 
-
-function getRewardLiquidityPool({
-  account,
-  pool
-}) {
+function getRewardLiquidityPool({ account, pool }) {
   return prisma.rewardLiquidityPool.findFirst({
     where: {
       depositAccountId: account.id,
-      poolId: pool.id
-    }
-  })
+      poolId: pool.id,
+    },
+  });
 }
 
 function find(tokenId: string) {
@@ -95,7 +88,7 @@ function find(tokenId: string) {
     where: {
       token: {
         token_id: tokenId,
-      }
+      },
     },
     include: {
       rewardLiquidityPool: {
@@ -104,10 +97,10 @@ function find(tokenId: string) {
           escrowTreasuryAccount: {
             select: {
               accountId: true,
-              account: true
-            }
-          }
-        }
+              account: true,
+            },
+          },
+        },
       },
       token: {
         select: {
@@ -115,33 +108,32 @@ function find(tokenId: string) {
           creatorId: false,
           token_id: true,
           symbol: true,
-          initial_price: true
-        }
+          initial_price: true,
+        },
       },
-      account: true
-    }
-  })
+      account: true,
+    },
+  });
 }
-
 
 function all() {
   return prisma.pool.findMany({
     include: {
-      token: true
-    }
-  })
+      token: true,
+    },
+  });
 }
 
 function proxyRewardPool(id) {
   return prisma.account.findFirst({
     where: {
-      id
+      id,
     },
     include: {
       holdings: {
         include: {
-          token: true
-        }
+          token: true,
+        },
       },
       EscrowTreasury: {
         include: {
@@ -153,19 +145,19 @@ function proxyRewardPool(id) {
                     include: {
                       holdings: {
                         include: {
-                          token: true
-                        }
-                      }
-                    }
+                          token: true,
+                        },
+                      },
+                    },
                   },
-                }
+                },
               },
-            }
-          }
-        }
-      }
-    }
-  })
+            },
+          },
+        },
+      },
+    },
+  });
 }
 
 export default {
@@ -176,7 +168,5 @@ export default {
   getRewardLiquidityPool,
   updatePoolAmount,
   proxyRewardPool,
-  all
-}
-
-
+  all,
+};

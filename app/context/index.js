@@ -1,5 +1,5 @@
-import useHashgraphContext from "./useHashgraphContext"
+import useHashgraphContext from "./useHashgraphContext";
 
 export default {
-	useHashgraphContext
-}
+  useHashgraphContext,
+};

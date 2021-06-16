@@ -39,9 +39,6 @@ a {
   width: 4.5rem;
 }
 
-body {
-}
-
 * {
   outline: none !important;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

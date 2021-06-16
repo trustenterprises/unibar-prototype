@@ -9,46 +9,40 @@
 
 import { CryptographyKey, SodiumPlus } from "sodium-plus";
 import Crypto from "crypto";
-import Config from "app/config"
+import Config from "app/config";
 
 // In production this would be incremented for every user for every tx
-function staticNonce () {
-  return Buffer.from(Config.staticNonce, 'base64')
+function staticNonce() {
+  return Buffer.from(Config.staticNonce, "base64");
 }
 
 // Generate a hashed signature key to encrypt the message or private key
-async function generateSignatureKey (signature) {
-  const hash = await Crypto.createHash('sha256').update(signature).digest();
+async function generateSignatureKey(signature) {
+  const hash = await Crypto.createHash("sha256").update(signature).digest();
 
   return new CryptographyKey(hash);
 }
 
-async function encrypt ({
-  message,
-  signature
-}) {
-  const nonce = staticNonce()
+async function encrypt({ message, signature }) {
+  const nonce = staticNonce();
   const sodium = await SodiumPlus.auto();
-  const key = await generateSignatureKey(signature)
-  const ciphertext = await sodium.crypto_secretbox(message, nonce, key)
+  const key = await generateSignatureKey(signature);
+  const ciphertext = await sodium.crypto_secretbox(message, nonce, key);
 
-  return ciphertext.toString('base64')
+  return ciphertext.toString("base64");
 }
 
-async function decrypt ({
-  encryptedBase64,
-  signature
-}) {
-  const nonce = staticNonce()
+async function decrypt({ encryptedBase64, signature }) {
+  const nonce = staticNonce();
   const sodium = await SodiumPlus.auto();
-  const key = await generateSignatureKey(signature)
-  const ciphertext = Buffer.from(encryptedBase64, 'base64')
+  const key = await generateSignatureKey(signature);
+  const ciphertext = Buffer.from(encryptedBase64, "base64");
   const decrypted = await sodium.crypto_secretbox_open(ciphertext, nonce, key);
 
-  return decrypted.toString('utf-8')
+  return decrypted.toString("utf-8");
 }
 
 export default {
   decrypt,
-  encrypt
-}
+  encrypt,
+};

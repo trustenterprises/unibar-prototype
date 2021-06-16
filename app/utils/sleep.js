@@ -3,10 +3,10 @@
  */
 
 // Maximum expected time for consensus finality.
-const DEFAULT_MS = 5000
+const DEFAULT_MS = 5000;
 
 function sleep(ms = DEFAULT_MS) {
-	return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export default sleep
+export default sleep;

@@ -1,5 +1,5 @@
-import checkAuthenticationKey from "./checkAuthenticationKey"
+import checkAuthenticationKey from "./checkAuthenticationKey";
 
 export default {
-	checkAuthenticationKey
-}
+  checkAuthenticationKey,
+};

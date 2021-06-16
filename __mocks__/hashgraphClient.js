@@ -1,58 +1,51 @@
 // Mocked hashgraph client for injection
-import HashgraphClientContract from 'app/hashgraph/contract'
-import MockHashgraphResponse from './static/hashgraph'
-import Config from "app/config"
+import HashgraphClientContract from "app/hashgraph/contract";
+import MockHashgraphResponse from "./static/hashgraph";
+import Config from "app/config";
 
 class mockedHashgraphClient {
-
   // Example response when creating a new topic
-  async createNewTopic ({
-		memo,
-		enable_private_submit_key
-	}) {
+  async createNewTopic({ memo, enable_private_submit_key }) {
     if (memo && enable_private_submit_key) {
-      return MockHashgraphResponse.newTopicWithMemoAndKey
-		}
+      return MockHashgraphResponse.newTopicWithMemoAndKey;
+    }
 
     if (memo) {
-      return MockHashgraphResponse.newTopicWithMemo
+      return MockHashgraphResponse.newTopicWithMemo;
     }
 
     if (enable_private_submit_key) {
-      return MockHashgraphResponse.newTopicWithPublicKey
+      return MockHashgraphResponse.newTopicWithPublicKey;
     }
 
-    return MockHashgraphResponse.newTopic
+    return MockHashgraphResponse.newTopic;
   }
 
-  async getTopicInfo () {
-    return MockHashgraphResponse.showTopic
+  async getTopicInfo() {
+    return MockHashgraphResponse.showTopic;
   }
 
-  async updateTopic ({ memo }) {
-
+  async updateTopic({ memo }) {
     if (memo) {
-      return MockHashgraphResponse.updateTopicWithMemo
+      return MockHashgraphResponse.updateTopicWithMemo;
     }
 
-    return MockHashgraphResponse.updateTopic
+    return MockHashgraphResponse.updateTopic;
   }
 
   // Example response returning the account balance
-  async accountBalanceQuery () {
-    return MockHashgraphResponse.accountBalance
+  async accountBalanceQuery() {
+    return MockHashgraphResponse.accountBalance;
   }
 
   // Example response returning the account balance
-  async sendConsensusMessage ({
-    allow_synchronous_consensus
-  }) {
+  async sendConsensusMessage({ allow_synchronous_consensus }) {
     if (allow_synchronous_consensus) {
-      return MockHashgraphResponse.transactionMessageResponse
+      return MockHashgraphResponse.transactionMessageResponse;
     }
 
-    return MockHashgraphResponse.consensusMessageResponse
+    return MockHashgraphResponse.consensusMessageResponse;
   }
 }
 
-export default mockedHashgraphClient
+export default mockedHashgraphClient;

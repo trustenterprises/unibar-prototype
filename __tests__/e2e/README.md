@@ -10,8 +10,7 @@ The entire test suite can be called with:
 yarn test:all
 ```
 
-An individual test may be run with 
-
+An individual test may be run with
 
 ```
 yarn test -- File

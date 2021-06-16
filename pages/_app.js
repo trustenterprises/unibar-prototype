@@ -1,11 +1,10 @@
 import React from "react";
-import { RecoilRoot } from 'recoil';
-import { ToastContainer } from 'react-toastify';
-import App from 'frontend'
+import { RecoilRoot } from "recoil";
+import { ToastContainer } from "react-toastify";
+import App from "frontend";
 import "tailwindcss/tailwind.css";
-import '../styles/globals.css'
-import 'react-toastify/dist/ReactToastify.css';
-
+import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function Index({ pageProps }) {
   return (
@@ -13,7 +12,7 @@ function Index({ pageProps }) {
       <App {...pageProps} />
       <ToastContainer />
     </RecoilRoot>
-  )
+  );
 }
 
-export default Index
+export default Index;

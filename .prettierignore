@@ -5,4 +5,6 @@
 !frontend/
 !pages/
 !styles/
-!/*[.js, .ts, .json]
+!/*.js
+!/*.json
+!/*.ts

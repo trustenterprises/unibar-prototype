@@ -1,6 +1,6 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-require('dotenv').config()
+require("dotenv").config();
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically
@@ -25,10 +25,7 @@ module.exports = {
   coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: [
-    "/node_modules/",
-    "app/utils/*"
-  ],
+  coveragePathIgnorePatterns: ["/node_modules/", "app/utils/*"],
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
@@ -83,7 +80,7 @@ module.exports = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     "^app(.*)$": "<rootDir>/app$1",
-    "^mocks(.*)$": "<rootDir>/__mocks__$1"
+    "^mocks(.*)$": "<rootDir>/__mocks__$1",
   },
 
   //"^Actions(.*)$": "<rootDir>/src/actions$1"
