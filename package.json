@@ -12,7 +12,8 @@
     "test:all": "jest --coverage --runInBand --detectOpenHandles",
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "prisma:build": "jest --coverage --runInBand --detectOpenHandles",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@ethersproject/providers": "^5.0.2",
@@ -46,11 +47,10 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-nextjs": "^1.0.6",
-    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^5.0.5",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.4.0",
