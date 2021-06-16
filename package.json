@@ -13,7 +13,8 @@
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "prisma:build": "jest --coverage --runInBand --detectOpenHandles",
     "prisma:studio": "prisma studio",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.0.2",

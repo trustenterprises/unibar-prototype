@@ -1,5 +1,8 @@
 /*
+!__mocks__/
+!__tests__/
 !app/
 !frontend/
 !pages/
 !styles/
+!/*[.js, .ts, .json]
